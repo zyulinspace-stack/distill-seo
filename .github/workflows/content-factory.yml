@@ -5,8 +5,7 @@ name: content-factory
 # Также можно запустить вручную из Actions tab.
 
 on:
-  schedule:
-    - cron: "0 6 * * *"
+  # ФАЗА 1: только ручной запуск — расписание отключено до перехода в ФАЗУ 2.
   workflow_dispatch:
     inputs:
       articles_per_day:
