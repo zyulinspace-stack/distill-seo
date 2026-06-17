@@ -5,13 +5,16 @@ name: content-factory
 # Также можно запустить вручную из Actions tab.
 
 on:
-  # ФАЗА 1: только ручной запуск — расписание отключено до перехода в ФАЗУ 2.
+  # ФАЗА 2: 1 статья в день, 06:00 UTC = 09:00 МСК. Ручной запуск сохранён.
+  schedule:
+    - cron: "0 6 * * *"
+
   workflow_dispatch:
     inputs:
       articles_per_day:
-        description: "Сколько статей сгенерировать (по умолчанию 5)"
+        description: "Сколько статей сгенерировать (по умолчанию 1)"
         required: false
-        default: "5"
+        default: "1"
       enable_editor_pass:
         description: "Включить этап редактора/фактчека (true/false)"
         required: false
@@ -73,18 +76,26 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
           EMAIL_FROM: "onboarding@resend.dev"
-          EMAIL_TO: "you@example.com"
+          EMAIL_TO: "neondinozavr@gmail.com"
           EMAIL_FROM_FALLBACK: "onboarding@resend.dev"
 
           # Параметры запуска
-          ARTICLES_PER_DAY: ${{ github.event.inputs.articles_per_day || '5' }}
+          ARTICLES_PER_DAY: ${{ github.event.inputs.articles_per_day || '1' }}
           ENABLE_EDITOR_PASS: ${{ github.event.inputs.enable_editor_pass || 'true' }}
           USE_BATCH: ${{ github.event.inputs.use_batch || 'true' }}
           TIMEZONE: Europe/Moscow
 
-          # Пути для blog (orchestrator определит SITE_REPO_PATH из GITHUB_WORKSPACE)
-          SITE_BLOG_DIR: content/blog
+          # distill-landing: cross-repo push через fine-grained PAT
+          # PAT нужен: Contents: write на distill-landing
+          SITE_REPO_TOKEN: ${{ secrets.SITE_REPO_TOKEN }}
+          SITE_REPO_URL: https://github.com/${{ github.repository_owner }}/distill-landing.git
           SITE_REPO_BRANCH: main
+          SITE_BLOG_DIR: blog
+          SITE_URL_BASE: https://www.distill-school.ru
+
+          # CTA-блок ({{CTA_TITLE}} и {{CTA_TEXT}} в article_template.html)
+          CTA_HEADING: "Освойте метанавыки — 4 урока бесплатно"
+          CTA_TEXT: "Критическое мышление, продуктивность, принятие решений — первые уроки без регистрации."
         run: python orchestrator.py
 
       # Пинг поисковиков о свежих статьях. Отдельный workflow seo-ping.yml (on:push)

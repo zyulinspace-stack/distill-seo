@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO -->
+  <title>{{SEO_TITLE}}</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="description" content="{{META_DESCRIPTION}}" />
+  <meta name="keywords" content="{{META_KEYWORDS}}" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{OG_TITLE}}" />
+  <meta property="og:description" content="{{OG_DESCRIPTION}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.distill-school.ru/blog/{{SLUG}}.html" />
+  <meta property="og:image" content="{{OG_IMAGE}}" />
+  <meta property="og:site_name" content="DISTILL — Школа метанавыков" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{OG_TITLE}}" />
+  <meta name="twitter:description" content="{{OG_DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE}}" />
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.distill-school.ru/blog/{{SLUG}}.html" />
+  <!-- Schema.org Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{TITLE}}",
+    "description": "{{META_DESCRIPTION}}",
+    "author": { "@type": "Organization", "name": "DISTILL — Школа метанавыков", "url": "https://www.distill-school.ru" },
+    "publisher": { "@type": "Organization", "name": "DISTILL", "url": "https://www.distill-school.ru" },
+    "datePublished": "{{DATE_ISO}}",
+    "dateModified": "{{DATE_ISO}}",
+    "image": "{{OG_IMAGE}}",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.distill-school.ru/blog/{{SLUG}}.html" },
+    "keywords": "{{META_KEYWORDS}}"
+  }
+  </script>
+  <!-- Яндекс.Метрика -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108295821', 'ym');
+    ym(108295821, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108295821" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --yellow:#E8FF00; --dark:#0A0A0A; --dark2:#111111; --dark3:#161616; --white:#FFFFFF; --gray:#888888; --font:'Inter',sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--dark); color: var(--white); overflow-x: hidden; }
+    nav { position: fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:22px 56px; background:var(--yellow); }
+    .nav-logo { font-size:20px; font-weight:900; letter-spacing:-0.04em; color:var(--dark); text-decoration:none; text-transform:lowercase; }
+    .nav-links { display:flex; gap:36px; list-style:none; }
+    .nav-links a { font-size:13px; font-weight:700; color:var(--dark); text-decoration:none; text-transform:lowercase; letter-spacing:0.02em; transition:opacity 0.2s; }
+    .nav-links a:hover { opacity:0.6; }
+    .nav-cta { background:var(--dark); color:var(--yellow) !important; padding:10px 22px; border-radius:4px; font-size:13px !important; font-weight:700 !important; text-decoration:none; transition:opacity 0.2s; }
+    .nav-cta:hover { opacity:0.8; }
+    article { max-width:760px; margin:0 auto; padding:140px 24px 80px; }
+    .article-tag { display:inline-block; background:var(--yellow); color:var(--dark); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; padding:4px 12px; border-radius:2px; margin-bottom:24px; }
+    h1 { font-size:clamp(28px,5vw,48px); font-weight:900; line-height:1.1; letter-spacing:-0.03em; margin-bottom:24px; }
+    .article-meta { font-size:13px; color:var(--gray); margin-bottom:40px; display:flex; gap:16px; flex-wrap:wrap; }
+    .article-lead { font-size:20px; line-height:1.6; color:#cccccc; margin-bottom:40px; border-left:3px solid var(--yellow); padding-left:20px; }
+    .article-body p { font-size:17px; line-height:1.75; color:#e0e0e0; margin-bottom:20px; }
+    .article-body h2 { font-size:clamp(22px,3.5vw,32px); font-weight:900; letter-spacing:-0.02em; margin:56px 0 20px; color:var(--white); }
+    .article-body h3 { font-size:20px; font-weight:700; margin:36px 0 12px; color:var(--white); }
+    .article-body strong { color:var(--yellow); }
+    .article-body a { color:var(--yellow); text-decoration:underline; }
+    .article-img { width:100%; border-radius:8px; margin:32px 0 12px; display:block; }
+    .article-img-caption { font-size:13px !important; color:var(--gray) !important; text-align:center; margin-bottom:32px !important; font-style:italic; }
+    .mm-card { background:var(--dark3); border-radius:8px; padding:24px 28px; margin:28px 0; border-left:5px solid var(--yellow); }
+    .mm-card .mm-title { font-size:18px; font-weight:900; margin-bottom:6px; letter-spacing:-0.01em; color:var(--white); }
+    .mm-card .mm-motto { font-size:14px; color:var(--gray); margin-bottom:12px; font-style:italic; }
+    .mm-card p { font-size:15px !important; line-height:1.65 !important; margin-bottom:0 !important; color:#d8d8d8 !important; }
+    .article-divider { border:none; border-top:1px solid #222; margin:48px 0; }
+    .highlight-box { background:var(--dark3); border:1px solid #2a2a2a; border-radius:8px; padding:28px 32px; margin:32px 0; }
+    .highlight-box p { margin-bottom:12px !important; }
+    .highlight-box p:last-child { margin-bottom:0 !important; }
+    .article-cta { background:var(--yellow); color:var(--dark); border-radius:12px; padding:40px 44px; margin:56px 0 32px; text-align:center; }
+    .article-cta h3 { font-size:26px; font-weight:900; letter-spacing:-0.02em; margin-bottom:12px; color:var(--dark); }
+    .article-cta p { font-size:16px; line-height:1.6; color:#333; margin-bottom:28px; }
+    .article-cta a { display:inline-block; background:var(--dark); color:var(--yellow); font-size:15px; font-weight:700; text-decoration:none; padding:16px 36px; border-radius:6px; letter-spacing:0.01em; transition:opacity 0.2s; }
+    .article-cta a:hover { opacity:0.85; }
+    .back-link { display:inline-block; color:var(--gray); font-size:14px; text-decoration:none; margin-bottom:40px; transition:color 0.2s; }
+    .back-link:hover { color:var(--white); }
+    footer { text-align:center; padding:40px 24px; border-top:1px solid #1a1a1a; font-size:13px; color:var(--gray); }
+    footer a { color:var(--gray); text-decoration:none; }
+    footer a:hover { color:var(--white); }
+    @media (max-width:640px) { nav { padding:16px 20px; } .nav-links { display:none; } article { padding:100px 16px 60px; } .article-cta { padding:28px 20px; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">distill</a>
+  <ul class="nav-links">
+    <li><a href="/#program">программа</a></li>
+    <li><a href="/#about">о школе</a></li>
+    <li><a href="/system/?utm_source=site&utm_medium=nav&utm_campaign=free_course">мини-курсы</a></li>
+    <li><a href="/blog/">блог</a></li>
+    <li><a href="/#faq">вопросы</a></li>
+  </ul>
+  <a href="https://t.me/distillsh_bot?start={{TG_START_PARAM}}" class="nav-cta">4 урока бесплатно →</a>
+</nav>
+
+<article>
+  <span class="article-tag">{{TAG}}</span>
+  <h1>{{TITLE}}</h1>
+  <div class="article-meta">
+    <span>DISTILL — Школа метанавыков</span>
+    <span>{{DATE_HUMAN}}</span>
+    <span>{{READ_MIN}} мин чтения</span>
+  </div>
+
+  <p class="article-lead">{{LEAD}}</p>
+
+  <div class="article-body">
+    <!-- {{BODY_HTML}} : сюда фабрика вставляет тело статьи.
+         Разрешённые блоки (и только они, чтобы совпадать с CSS):
+           <p>…</p>
+           <h2 id="...">…</h2>  <h3>…</h3>
+           <strong>…</strong>  <a href="…">…</a>
+           <hr class="article-divider" />
+           <div class="highlight-box"><p>…</p>…</div>
+           <div class="mm-card"><div class="mm-title">…</div><div class="mm-motto">…</div><p>…</p></div>
+           <img src="…" alt="…" class="article-img" /><p class="article-img-caption">…</p>
+         Без таблиц/скриптов/чужих классов. -->
+    {{BODY_HTML}}
+  </div>
+
+  <div class="article-cta">
+    <h3>{{CTA_TITLE}}</h3>
+    <p>{{CTA_TEXT}}</p>
+    <a href="https://t.me/distillsh_bot?start={{TG_START_PARAM}}">забрать 4 урока бесплатно →</a>
+  </div>
+
+  <a href="/blog/" class="back-link">← все статьи блога</a>
+</article>
+
+<footer>
+  <p>© 2026 <a href="/">DISTILL — Школа метанавыков</a>. Все права защищены.</p>
+</footer>
+</body>
+</html>

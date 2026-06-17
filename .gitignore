@@ -18,5 +18,8 @@ seo-agent/data/rankings/*.json
 seo-agent/data/eeat/*.json
 !seo-agent/data/rankings/tracked-keywords.json
 
+# Dry-run артефакты (локальная отладка)
+content-factory/dry-run/
+
 # OS
 .DS_Store
