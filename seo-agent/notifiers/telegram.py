@@ -46,6 +46,8 @@ def _send(text: str, parse_mode: Optional[str] = None) -> dict:
         payload["parse_mode"] = parse_mode
 
     response = requests.post(url, json=payload, timeout=15)
+    if not response.ok:
+        log.error("Telegram API error %s: %s", response.status_code, response.text)
     response.raise_for_status()
     return response.json()
 
