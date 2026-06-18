@@ -115,6 +115,8 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           SITE_URL_BASE: https://www.distill-school.ru
           SITEMAP_URL: https://www.distill-school.ru/sitemap.xml
+          INDEXNOW_KEY: dm84te09emo5irwunkgw8mt7hd9j80tc
+          INDEXNOW_HOST: www.distill-school.ru
         run: |
           pip install google-api-python-client google-auth google-auth-oauthlib requests
           URLS_FILE="content-factory/published_urls.txt"
