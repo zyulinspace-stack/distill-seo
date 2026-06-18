@@ -98,27 +98,34 @@ jobs:
           CTA_TEXT: "Критическое мышление, продуктивность, принятие решений — первые уроки без регистрации."
         run: python orchestrator.py
 
-      # Пинг поисковиков о свежих статьях. Отдельный workflow seo-ping.yml (on:push)
-      # НЕ срабатывает на коммиты фабрики — push через GITHUB_TOKEN не триггерит
-      # другие workflow (защита GitHub от рекурсии). Поэтому пингуем здесь же,
-      # в том же job, против состояния репо ДО генерации (${{ github.sha }}).
+      # Orchestrator записывает published_urls.txt после коммита в distill-landing.
+      # Telegram-уведомление о публикации уже отправлено orchestrator'ом;
+      # ping_new_urls.py досылает сводку IndexNow + Я.Вебмастер + GSC.
       - name: Ping search engines (IndexNow + Я.Вебмастер + GSC)
         if: success()
         env:
           GSC_OAUTH_REFRESH_TOKEN: ${{ secrets.GSC_OAUTH_REFRESH_TOKEN }}
           GSC_OAUTH_CLIENT_ID: ${{ secrets.GSC_OAUTH_CLIENT_ID }}
           GSC_OAUTH_CLIENT_SECRET: ${{ secrets.GSC_OAUTH_CLIENT_SECRET }}
-          GSC_SITE_URL: sc-domain:example.com
+          GSC_SITE_URL: sc-domain:distill-school.ru
           YANDEX_WEBMASTER_TOKEN: ${{ secrets.YANDEX_WEBMASTER_TOKEN }}
           YANDEX_WEBMASTER_USER_ID: ${{ secrets.YANDEX_WEBMASTER_USER_ID }}
           YANDEX_WEBMASTER_HOST_ID: ${{ secrets.YANDEX_WEBMASTER_HOST_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          SITE_URL_BASE: https://example.com
-          SITEMAP_URL: https://example.com/sitemap.xml
+          SITE_URL_BASE: https://www.distill-school.ru
+          SITEMAP_URL: https://www.distill-school.ru/sitemap.xml
         run: |
           pip install google-api-python-client google-auth google-auth-oauthlib requests
-          python3 seo-agent/scripts/ping_new_urls.py --from-git-diff --base-ref=${{ github.sha }} --head-ref=HEAD
+          URLS_FILE="content-factory/published_urls.txt"
+          if [ -f "$URLS_FILE" ] && [ -s "$URLS_FILE" ]; then
+            URLS=$(cat "$URLS_FILE" | tr '\n' ' ')
+            echo "Пингуем URL: $URLS"
+            python3 seo-agent/scripts/ping_new_urls.py $URLS
+          else
+            echo "published_urls.txt пуст — пингуем только sitemap"
+            python3 seo-agent/scripts/ping_new_urls.py --sitemap-only
+          fi
 
       - name: Upload run log as artifact
         if: always()

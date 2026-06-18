@@ -14,6 +14,7 @@ import json
 import logging
 import os
 import re
+import requests
 import subprocess
 import sys
 import time
@@ -129,6 +130,7 @@ class ArticleResult:
     slug: str = ""
     title: str = ""
     file_path: Optional[Path] = None
+    extra_files: list[Path] = field(default_factory=list)  # blog/index.html, sitemap.xml
     status: str = "pending"   # pending | published | failed
     error: Optional[str] = None
     elapsed_sec: float = 0.0
@@ -428,10 +430,12 @@ def ensure_site_repo() -> None:
 
 
 def commit_and_push(written_files: list[Path], date_str: str) -> Optional[str]:
-    """Коммит HTML-статей в distill-landing и пуш."""
+    """Коммит HTML-статей + blog/index.html + sitemap.xml в distill-landing и пуш."""
     if not written_files:
         return None
-    paths = [str(p.relative_to(SITE_REPO_PATH)) for p in written_files]
+    # Дедуплицируем: index.html и sitemap.xml могут попасть по разу на каждую статью
+    unique_files = list(dict.fromkeys(written_files))
+    paths = [str(p.relative_to(SITE_REPO_PATH)) for p in unique_files]
     _run(["git", "add", "--", *paths], cwd=SITE_REPO_PATH)
     diff = subprocess.run(
         ["git", "diff", "--cached", "--name-only"],
@@ -474,6 +478,116 @@ def commit_factory_csv(date_str: str) -> None:
     _run(["git", "push", "origin", "main"], cwd=workspace)
 
 
+# ── Обновление blog/index.html и sitemap.xml ─────────────────────────
+def _update_blog_index(blog_dir: Path, brief: dict, lead: str, body_html: str,
+                       publish_date: str) -> Optional[Path]:
+    """Вставить карточку новой статьи первой в <div class="blog-grid">."""
+    index_path = blog_dir / "index.html"
+    if not index_path.exists():
+        log.warning("blog/index.html не найден в %s — пропускаю карточку", blog_dir)
+        return None
+    slug = brief.get("slug", "")
+    title = brief.get("title", "")
+    description = brief.get("description", "")
+    category = brief.get("category", "")
+    read_min = _estimate_read_time(lead, body_html)
+    date_human = _format_date_human(publish_date)
+    utm_term = slug.replace("-", "_")
+    utm = f"?utm_source=seo&utm_medium=blog&utm_campaign={category}&utm_term={utm_term}"
+    card = (
+        f'\n    <!-- {title} -->\n'
+        f'    <a class="blog-card" href="/blog/{slug}.html{utm}">\n'
+        f'      <span class="card-tag">{category}</span>\n'
+        f'      <h2 class="card-title">{title}</h2>\n'
+        f'      <p class="card-desc">{description}</p>\n'
+        f'      <div class="card-meta">\n'
+        f'        <span>{date_human}</span>\n'
+        f'        <span>{read_min} мин</span>\n'
+        f'        <span class="card-read-link">читать →</span>\n'
+        f'      </div>\n'
+        f'    </a>\n'
+    )
+    html = index_path.read_text(encoding="utf-8")
+    marker = '<div class="blog-grid">'
+    if marker not in html:
+        log.warning("Маркер '<div class=\"blog-grid\">' не найден в blog/index.html")
+        return None
+    html = html.replace(marker, marker + card, 1)
+    index_path.write_text(html, encoding="utf-8")
+    log.info("blog/index.html: карточка '%s' добавлена первой", title)
+    return index_path
+
+
+def _update_sitemap(site_repo_path: Path, slug: str, publish_date: str) -> Optional[Path]:
+    """Добавить URL статьи в sitemap.xml перед </urlset>."""
+    sitemap_path = site_repo_path / "sitemap.xml"
+    if not sitemap_path.exists():
+        log.warning("sitemap.xml не найден в %s — пропускаю", site_repo_path)
+        return None
+    site_base = os.environ.get("SITE_URL_BASE", "https://www.distill-school.ru").rstrip("/")
+    entry = (
+        f'\n  <url>\n'
+        f'    <loc>{site_base}/blog/{slug}.html</loc>\n'
+        f'    <lastmod>{publish_date}</lastmod>\n'
+        f'    <changefreq>monthly</changefreq>\n'
+        f'    <priority>0.8</priority>\n'
+        f'  </url>'
+    )
+    xml = sitemap_path.read_text(encoding="utf-8")
+    if "</urlset>" not in xml:
+        log.warning("sitemap.xml: тег </urlset> не найден — пропускаю")
+        return None
+    xml = xml.replace("</urlset>", entry + "\n</urlset>")
+    sitemap_path.write_text(xml, encoding="utf-8")
+    log.info("sitemap.xml: добавлен %s/blog/%s.html", site_base, slug)
+    return sitemap_path
+
+
+# ── Telegram + URL-файл для шага пинга ──────────────────────────────
+def notify_telegram_published(results: list[ArticleResult], publish_date: str) -> None:
+    """Отправить уведомление в Telegram сразу после пуша в distill-landing."""
+    token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    if not token or not chat_id:
+        log.info("TELEGRAM_BOT_TOKEN/CHAT_ID не заданы — пропускаю Telegram")
+        return
+    site_base = os.environ.get("SITE_URL_BASE", "https://www.distill-school.ru").rstrip("/")
+    published = [r for r in results if r.status == "published" and r.slug]
+    if not published:
+        return
+    lines = [f"✅ Контент-фабрика DISTILL — {publish_date}", ""]
+    for r in published:
+        url = f"{site_base}/blog/{r.slug}.html"
+        lines.append(f"📄 {r.title}")
+        lines.append(url)
+    try:
+        resp = requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat_id, "text": "\n".join(lines), "disable_web_page_preview": False},
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            log.info("Telegram: уведомление отправлено")
+        else:
+            log.warning("Telegram: %d — %s", resp.status_code, resp.text[:200])
+    except Exception as e:  # noqa: BLE001
+        log.warning("Telegram: сетевая ошибка — %s", e)
+
+
+def write_published_urls(results: list[ArticleResult]) -> Optional[Path]:
+    """Записать опубликованные URL в published_urls.txt для шага пинга в workflow."""
+    site_base = os.environ.get("SITE_URL_BASE", "https://www.distill-school.ru").rstrip("/")
+    published = [r for r in results if r.status == "published" and r.slug]
+    if not published:
+        return None
+    urls = [f"{site_base}/blog/{r.slug}.html" for r in published]
+    workspace = Path(os.environ.get("GITHUB_WORKSPACE", str(ROOT.parent)))
+    urls_file = workspace / "content-factory" / "published_urls.txt"
+    urls_file.write_text("\n".join(urls), encoding="utf-8")
+    log.info("published_urls.txt: %d URL → %s", len(urls), urls_file)
+    return urls_file
+
+
 # ── Основной поток ────────────────────────────────────────────────────
 def finalize_article(res: ArticleResult, brief: dict, article: dict,
                      blog_dir: Path, publish_date: str) -> None:
@@ -486,6 +600,14 @@ def finalize_article(res: ArticleResult, brief: dict, article: dict,
     target.write_text(html, encoding="utf-8")
     res.file_path = target
     res.status = "published"
+
+    # Обновляем blog/index.html (карточка) и sitemap.xml
+    idx = _update_blog_index(blog_dir, brief, lead, body_html, publish_date)
+    if idx:
+        res.extra_files.append(idx)
+    smp = _update_sitemap(blog_dir.parent, res.slug, publish_date)
+    if smp:
+        res.extra_files.append(smp)
 
     (LOGS / f"brief-{publish_date}-{res.slug}.json").write_text(
         json.dumps(brief, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -649,6 +771,7 @@ def main() -> int:
         report.results.append(res)
         if res.status == "published" and res.file_path:
             written_files.append(res.file_path)
+            written_files.extend(res.extra_files)  # blog/index.html + sitemap.xml
             successful_topics.append(res.topic)
             used_rows.append({
                 "date": publish_date,
@@ -657,7 +780,7 @@ def main() -> int:
                 "primary_keyword": res.topic.primary_keyword,
                 "category": res.topic.category,
                 "status": res.status,
-                "url": f"{os.environ.get('SITE_URL_BASE', 'https://example.com')}/blog/{res.slug}/",
+                "url": f"{os.environ.get('SITE_URL_BASE', 'https://www.distill-school.ru')}/blog/{res.slug}.html",
             })
 
     if successful_topics:
@@ -670,6 +793,9 @@ def main() -> int:
             sha = commit_and_push(written_files, publish_date)
             report.commit_sha = sha
             push_ok = True
+            # Уведомление в Telegram + файл с URL для шага пинга
+            notify_telegram_published(report.results, publish_date)
+            write_published_urls(report.results)
         except subprocess.CalledProcessError:
             log.exception("Git push в distill-landing провалился — откатываю CSV")
             report.commit_sha = None
