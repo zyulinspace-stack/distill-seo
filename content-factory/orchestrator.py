@@ -213,6 +213,17 @@ _MONTHS_RU = [
 ]
 
 
+_CATEGORY_RU: dict[str, str] = {
+    "thinking":    "мышление",
+    "productivity": "продуктивность",
+    "philosophy":  "философия",
+}
+
+
+def _localize_category(cat: str) -> str:
+    return _CATEGORY_RU.get(cat.strip().lower(), cat)
+
+
 def _format_date_human(date_str: str) -> str:
     dt = datetime.strptime(date_str, "%Y-%m-%d")
     return f"{dt.day} {_MONTHS_RU[dt.month - 1]} {dt.year}"
@@ -252,7 +263,7 @@ def fill_template(brief: dict, lead: str, body_html: str, publish_date: str) -> 
         # nav + article-cta кнопка
         "{{TG_START_PARAM}}":   tg_param,
         # article header
-        "{{TAG}}":              brief.get("category", ""),
+        "{{TAG}}":              _localize_category(brief.get("category", "")),
         "{{DATE_HUMAN}}":       _format_date_human(publish_date),
         "{{READ_MIN}}":         str(_estimate_read_time(lead, body_html)),
         # article body
@@ -490,6 +501,7 @@ def _update_blog_index(blog_dir: Path, brief: dict, lead: str, body_html: str,
     title = brief.get("title", "")
     description = brief.get("description", "")
     category = brief.get("category", "")
+    category_ru = _localize_category(category)
     read_min = _estimate_read_time(lead, body_html)
     date_human = _format_date_human(publish_date)
     utm_term = slug.replace("-", "_")
@@ -497,7 +509,7 @@ def _update_blog_index(blog_dir: Path, brief: dict, lead: str, body_html: str,
     card = (
         f'\n    <!-- {title} -->\n'
         f'    <a class="blog-card" href="/blog/{slug}.html{utm}">\n'
-        f'      <span class="card-tag">{category}</span>\n'
+        f'      <span class="card-tag">{category_ru}</span>\n'
         f'      <h2 class="card-title">{title}</h2>\n'
         f'      <p class="card-desc">{description}</p>\n'
         f'      <div class="card-meta">\n'
