@@ -1,0 +1,105 @@
+{
+  "date": "2026-06-21",
+  "site": "https://www.distill-school.ru",
+  "crawl_stats": {
+    "total": 14,
+    "ok": 14,
+    "redirect": 0,
+    "client_err": 0,
+    "server_err": 0,
+    "network_err": 0
+  },
+  "issues": [
+    {
+      "url": "https://www.distill-school.ru/",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=166 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/metanavyki-chto-eto-takoe.html",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=166 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/spiralnaya-dinamika-chto-eto.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=77 символов, рекомендуется ≤60"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/spiralnaya-dinamika-chto-eto.html",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=197 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/pochemu-my-prinimaem-plohie-resheniya.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=61 символов, рекомендуется ≤60"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/burnout-levels.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=72 символов, рекомендуется ≤60"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/rynok-truda-2026.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=64 символов, рекомендуется ≤60"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/test-na-vygoranie-igra.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=75 символов, рекомендуется ≤60"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/test-na-vygoranie-igra.html",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=169 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/sistemnoe-myshlenie-chto-eto.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=96 символов, рекомендуется ≤60"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/sistemnoe-myshlenie-chto-eto.html",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=178 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/mentalnye-modeli-chto-eto.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=84 символов, рекомендуется ≤60"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/mentalnye-modeli-chto-eto.html",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=248 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/game/",
+      "check": "json_ld_missing",
+      "severity": "medium",
+      "detail": "нет JSON-LD на странице"
+    },
+    {
+      "url": "https://www.distill-school.ru/blog/pochemu-padaet-produktivnost.html",
+      "check": "title_too_long",
+      "severity": "medium",
+      "detail": "title=63 символов, рекомендуется ≤60"
+    }
+  ],
+  "psi": {}
+}
