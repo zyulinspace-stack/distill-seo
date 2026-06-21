@@ -1,0 +1,30 @@
+{
+  "date": "2026-06-21",
+  "queries_count": 1,
+  "topics_added": 1,
+  "queries": [
+    {
+      "text": "метанавыки обучение",
+      "impressions": 3,
+      "clicks": 0,
+      "position": 18.0,
+      "source": "gsc"
+    }
+  ],
+  "topics": [
+    {
+      "topic": "Метанавыки: что это такое и как их развивать для эффективного обучения",
+      "primary_keyword": "метанавыки обучение",
+      "secondary_keywords": "метанавыки, навыки обучения, как научиться учиться",
+      "intent": "informational",
+      "category": "dictionary",
+      "wordstat_frequency": 0,
+      "competitor_refs": "",
+      "priority": 4,
+      "_source_queries": [
+        "метанавыки обучение"
+      ],
+      "_total_impressions": 3
+    }
+  ]
+}
