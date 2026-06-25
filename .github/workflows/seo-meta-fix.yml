@@ -1,0 +1,49 @@
+name: seo · fix-meta-once
+
+# Одноразовый запуск: укорачивает title/description в distill-landing,
+# добавляет JSON-LD там, где его не нашёл M2-аудит.
+# Запускается вручную из Actions tab.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read   # distill-seo только читаем
+
+concurrency:
+  group: seo-meta-fix
+  cancel-in-progress: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout distill-seo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: content-factory/requirements.txt
+
+      - name: Install dependencies
+        working-directory: content-factory
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run fix_seo_issues
+        working-directory: content-factory
+        env:
+          SITE_REPO_TOKEN:  ${{ secrets.SITE_REPO_TOKEN }}
+          SITE_REPO_URL:    https://github.com/${{ github.repository_owner }}/distill-landing.git
+          SITE_REPO_BRANCH: main
+          SITE_BLOG_DIR:    blog
+          SITE_URL_BASE:    https://www.distill-school.ru
+        run: python fix_seo_issues.py

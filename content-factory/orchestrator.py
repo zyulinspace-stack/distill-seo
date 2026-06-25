@@ -244,15 +244,15 @@ def fill_template(brief: dict, lead: str, body_html: str, publish_date: str) -> 
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
     slug = brief.get("slug", "")
     title = brief.get("title", "")
-    h1 = brief.get("h1", title)       # SEO_TITLE — H1 на странице, может длиннее title
+    h1 = brief.get("h1", title)       # заголовок H1 на странице, может длиннее title
     description = brief.get("description", "")
     keywords = ", ".join(brief.get("keywords", []))
     tg_param = os.environ.get("TG_START_PARAM_PREFIX", "") + slug
 
     replacements = {
         # <head>
-        "{{SEO_TITLE}}":        h1,
-        "{{TITLE}}":            title,           # schema.org headline
+        "{{SEO_TITLE}}":        title,           # <title> тег — ≤60 символов
+        "{{TITLE}}":            h1,              # <h1> на странице + schema.org headline
         "{{META_DESCRIPTION}}": description,
         "{{META_KEYWORDS}}":    keywords,
         "{{OG_TITLE}}":         title,
@@ -315,12 +315,42 @@ def brief_user(topic: Topic, publish_date: str) -> str:
     )
 
 
+def _truncate(text: str, max_len: int) -> str:
+    """Обрезает текст до max_len символов на границе слова, добавляя «…»."""
+    if len(text) <= max_len:
+        return text
+    cut = text[:max_len - 1]
+    space = cut.rfind(" ")
+    if space > max_len // 2:
+        cut = cut[:space]
+    return cut + "…"
+
+
+def _enforce_brief_limits(brief: dict) -> dict:
+    """Гарантирует title ≤ 60 и description ≤ 160; пустые поля — ошибка."""
+    title = (brief.get("title") or "").strip()
+    desc = (brief.get("description") or "").strip()
+    if not title:
+        raise ValueError("brief: пустой title — нельзя публиковать")
+    if not desc:
+        raise ValueError("brief: пустое description — нельзя публиковать")
+    if len(title) > 60:
+        title = _truncate(title, 60)
+        brief["title"] = title
+        log.warning("brief: title обрезан до %d символов → %r", len(title), title)
+    if len(desc) > 160:
+        desc = _truncate(desc, 160)
+        brief["description"] = desc
+        log.warning("brief: description обрезана до %d символов → %r", len(desc), desc)
+    return brief
+
+
 def parse_brief(raw: str) -> dict:
     raw = raw.strip()
     if raw.startswith("```"):
         raw = re.sub(r"^```(?:json)?\s*", "", raw)
         raw = re.sub(r"\s*```\s*$", "", raw)
-    return json.loads(raw)
+    return _enforce_brief_limits(json.loads(raw))
 
 
 def parse_article(raw: str) -> dict:
