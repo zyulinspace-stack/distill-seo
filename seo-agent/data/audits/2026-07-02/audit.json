@@ -1,0 +1,14 @@
+{
+  "date": "2026-07-02",
+  "site": "https://www.distill-school.ru",
+  "crawl_stats": {
+    "total": 24,
+    "ok": 24,
+    "redirect": 0,
+    "client_err": 0,
+    "server_err": 0,
+    "network_err": 0
+  },
+  "issues": [],
+  "psi": {}
+}
