@@ -1,8 +1,8 @@
 """
 Daily digest — короткая утренняя сводка (≈08:30 МСК).
 
-В отличие от weekly_digest, сравнивает «вчера с позавчера», а не неделю с неделей:
-  - GSC: трафик за последний доступный день vs предыдущий.
+В отличие от weekly_digest, это ежедневная сводка, но окно трафика — скользящее:
+  - GSC: трафик за 28 дней (сдвиг -3 дня) vs предыдущее 28-дневное окно.
   - Позиции: последний снимок rankings vs предыдущий (движения за сутки).
   - Тех-аудит: последний аудит + что нового появилось за сутки.
   - Я.Вебмастер: ИКС (+ дельта), страниц в индексе.
@@ -53,32 +53,75 @@ def site_domain() -> str:
 
 # ───── Источники с дневной дельтой ──────────────────────────────────
 
-def gsc_traffic_daily() -> dict:
-    """Клики/показы за последний доступный день vs предыдущий.
+# Окно трафика. Молодой сайт даёт <1 показа в день, поэтому «вчера» почти всегда
+# 0 — сравнение суток бессмысленно. Берём агрегат за 28 дней со сдвигом на 3 дня
+# назад (GSC отдаёт данные с задержкой 2-3 дня) и сравниваем с предыдущим окном
+# такой же длины. GSC_SITE_URL в workflow — URL-prefix https://www.distill-school.ru/,
+# в нём статистики больше, чем в domain-property.
+GSC_LAG_DAYS = 3
+GSC_WINDOW_DAYS = 28
 
-    GSC отдаёт данные с задержкой ~2-3 дня, поэтому берём не «вчера», а два
-    последних дня, по которым есть статистика, и сравниваем их между собой.
+
+def _gsc_window(svc, url: str, start: str, end: str) -> dict:
+    """Агрегат (клики/показы/средняя позиция) + топ-запросы за период [start, end]."""
+    from modules.gsc_client import query_search_analytics
+    # dimensions=[] → одна агрегированная строка с суммарными метриками за период.
+    totals = query_search_analytics(svc, url, start, end, [], row_limit=1)
+    agg = totals[0] if totals else {}
+    queries = query_search_analytics(svc, url, start, end, ["query"], row_limit=10)
+    return {
+        "clicks": int(agg.get("clicks", 0)),
+        "impressions": int(agg.get("impressions", 0)),
+        "position": float(agg.get("position", 0.0)),
+        "queries": queries,
+    }
+
+
+def gsc_traffic_daily() -> dict:
+    """Трафик за последние 28 дней (сдвиг -3 дня) vs предыдущее 28-дневное окно.
+
+    Возвращает суммарные клики/показы, среднюю позицию, топ-запросы и дельту
+    к прошлому окну. Пустой dict — если данных нет вовсе.
     """
     try:
-        from modules.gsc_client import gsc_service, query_search_analytics
+        from modules.gsc_client import gsc_service
         svc = gsc_service()
         url = os.environ.get("GSC_SITE_URL", "sc-domain:example.com")
-        start = (dt.date.today() - dt.timedelta(days=10)).isoformat()
-        end = (dt.date.today() - dt.timedelta(days=1)).isoformat()
-        rows = query_search_analytics(svc, url, start, end, ["date"], row_limit=30)
-        # rows: [{keys:[date], clicks, impressions}, ...] — сортируем по дате.
-        days = sorted(rows, key=lambda r: r["keys"][0])
-        if not days:
+
+        end = dt.date.today() - dt.timedelta(days=GSC_LAG_DAYS)
+        start = end - dt.timedelta(days=GSC_WINDOW_DAYS - 1)
+        prev_end = start - dt.timedelta(days=1)
+        prev_start = prev_end - dt.timedelta(days=GSC_WINDOW_DAYS - 1)
+
+        cur = _gsc_window(svc, url, start.isoformat(), end.isoformat())
+        prev = _gsc_window(svc, url, prev_start.isoformat(), prev_end.isoformat())
+
+        if not (cur["clicks"] or cur["impressions"] or cur["queries"]):
             return {}
-        last = days[-1]
-        prev = days[-2] if len(days) >= 2 else None
-        c1, i1 = int(last.get("clicks", 0)), int(last.get("impressions", 0))
-        c2, i2 = (int(prev.get("clicks", 0)), int(prev.get("impressions", 0))) if prev else (0, 0)
+
+        has_prev = bool(prev["clicks"] or prev["impressions"])
+        top = [
+            {
+                "query": r["keys"][0],
+                "clicks": int(r.get("clicks", 0)),
+                "impressions": int(r.get("impressions", 0)),
+                "position": float(r.get("position", 0.0)),
+            }
+            for r in cur["queries"][:5]
+        ]
         return {
-            "date": last["keys"][0],
-            "clicks": c1, "impressions": i1,
-            "delta_clicks": c1 - c2, "delta_impressions": i1 - i2,
-            "has_prev": prev is not None,
+            "start": start.isoformat(),
+            "end": end.isoformat(),
+            "days": GSC_WINDOW_DAYS,
+            "clicks": cur["clicks"],
+            "impressions": cur["impressions"],
+            "position": cur["position"],
+            "delta_clicks": cur["clicks"] - prev["clicks"],
+            "delta_impressions": cur["impressions"] - prev["impressions"],
+            # Позиция: меньше = лучше, поэтому в дельте отрицательное — это рост.
+            "delta_position": round(cur["position"] - prev["position"], 1) if has_prev else 0.0,
+            "top_queries": top,
+            "has_prev": has_prev,
         }
     except Exception as e:
         log.warning("GSC daily traffic: %s", e)
@@ -250,12 +293,31 @@ def render_telegram(today: dt.date, site: str, payload: dict, advice: str) -> st
     t = payload.get("traffic") or {}
     if t:
         dc, di = t["delta_clicks"], t["delta_impressions"]
-        trend = "больше вчерашнего" if dc > 0 else ("меньше вчерашнего" if dc < 0 else "как вчера")
+        days = t.get("days", GSC_WINDOW_DAYS)
+        trend = ("больше прошлого периода" if dc > 0
+                 else "меньше прошлого периода" if dc < 0 else "как в прошлом периоде")
+        delta_note = f"{dc:+d} — {trend}" if t.get("has_prev") else "первое окно"
         lines.append(
-            f"\n👥 Трафик из Google: {t['clicks']} "
+            f"\n👥 Трафик из Google за {days} дней: {t['clicks']} "
             f"{plural(t['clicks'], 'переход', 'перехода', 'переходов')} "
-            f"({dc:+d} — {trend}). Показов {t['impressions']} ({di:+d})."
+            f"({delta_note}). Показов {t['impressions']} ({di:+d})."
         )
+        pos = t.get("position") or 0.0
+        if pos:
+            dp = t.get("delta_position") or 0.0
+            # dp<0 = позиция улучшилась (стала ближе к 1).
+            pos_trend = "" if not (t.get("has_prev") and dp) else (
+                f", {'↑' if dp < 0 else '↓'} {abs(dp):.1f}")
+            lines.append(f"   📍 Средняя позиция: {pos:.1f}{pos_trend}.")
+        tq = t.get("top_queries") or []
+        if tq:
+            lines.append("   🔑 Топ-запросы:")
+            for q in tq:
+                lines.append(
+                    f"      • «{q['query']}» — {q['clicks']} "
+                    f"{plural(q['clicks'], 'клик', 'клика', 'кликов')} / "
+                    f"{q['impressions']} показ. (поз. {q['position']:.1f})"
+                )
     else:
         lines.append("\n👥 Трафик из Google: данных пока нет "
                      "(новый домен или Search Console ещё копит статистику).")
@@ -329,7 +391,7 @@ def run_daily(dry_run: bool = False) -> Path:
 
     payload = build_payload()
 
-    period = "за вчерашний день"
+    period = "за последние 28 дней (трафик) и за сутки (позиции, аудит)"
     try:
         from modules.strategist import strategist_advice
         advice = strategist_advice(site, period, payload)

@@ -96,11 +96,16 @@ def query_search_analytics(
     dimensions: Optional[list[str]] = None,
     row_limit: int = 1000,
 ) -> list[dict]:
-    """Возвращает строки searchanalytics.query."""
+    """Возвращает строки searchanalytics.query.
+
+    dimensions=[] (пустой список) — это валидный запрос агрегата за период:
+    GSC вернёт одну строку с суммарными clicks/impressions/ctr/position без
+    разбивки. Поэтому пустой список НЕ подменяем на ["query"] — только None.
+    """
     body = {
         "startDate": start_date,
         "endDate": end_date,
-        "dimensions": dimensions or ["query"],
+        "dimensions": ["query"] if dimensions is None else dimensions,
         "rowLimit": row_limit,
     }
     response = svc.searchanalytics().query(siteUrl=site_url, body=body).execute()
