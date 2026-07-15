@@ -113,16 +113,20 @@ def yw_queries_total(
 ) -> dict:
     """Суммарная статистика поиска по всему сайту за период.
 
-    Возвращает {"shows", "clicks", "position"} — сумма показов и кликов за окно
-    и средняя позиция показа, взвешенная по показам за день. Источник —
-    /search-queries/all/history/ (агрегат по сайту, а не по отдельным запросам).
+    Возвращает {"shows", "clicks", "position", "click_position"} — сумма показов
+    и кликов за окно, средняя позиция показа (взвешена по показам) и средняя
+    позиция клика (взвешена по кликам). Позиция показа сопоставима с Google;
+    позиция клика — то, что Вебмастер выносит в заголовок «средняя позиция».
+    Источник — /search-queries/all/history/ (агрегат по сайту).
 
     Docs: https://yandex.ru/dev/webmaster/doc/dg/reference/host-search-queries-all-history-get.html
     """
     params = {
         "date_from": date_from,
         "date_to": date_to,
-        "query_indicator": ["TOTAL_SHOWS", "TOTAL_CLICKS", "AVG_SHOW_POSITION"],
+        "query_indicator": [
+            "TOTAL_SHOWS", "TOTAL_CLICKS", "AVG_SHOW_POSITION", "AVG_CLICK_POSITION",
+        ],
     }
     data = _get(
         f"/user/{user_id}/hosts/{quote(host_id, safe='')}/search-queries/all/history/",
@@ -134,23 +138,29 @@ def yw_queries_total(
         return [p for p in (ind.get(key) or []) if p.get("value") is not None]
 
     shows_points = _series("TOTAL_SHOWS")
+    clicks_points = _series("TOTAL_CLICKS")
     shows = sum(p["value"] for p in shows_points)
-    clicks = sum(p["value"] for p in _series("TOTAL_CLICKS"))
+    clicks = sum(p["value"] for p in clicks_points)
 
-    # Средняя позиция — взвешиваем дневные значения по показам того же дня.
-    shows_by_date = {p["date"]: p["value"] for p in shows_points}
-    num = den = 0.0
-    for p in _series("AVG_SHOW_POSITION"):
-        w = shows_by_date.get(p["date"], 0) or 0
-        num += p["value"] * w
-        den += w
-    if den:
-        avg_pos = num / den
-    else:
-        pos = _series("AVG_SHOW_POSITION")
-        avg_pos = sum(p["value"] for p in pos) / len(pos) if pos else 0.0
+    def _weighted(pos_key: str, weight_points: list[dict]) -> float:
+        """Средняя позиция, взвешенная по дневному весу (показам или кликам)."""
+        weight_by_date = {p["date"]: p["value"] for p in weight_points}
+        num = den = 0.0
+        for p in _series(pos_key):
+            w = weight_by_date.get(p["date"], 0) or 0
+            num += p["value"] * w
+            den += w
+        if den:
+            return num / den
+        pos = _series(pos_key)
+        return sum(p["value"] for p in pos) / len(pos) if pos else 0.0
 
-    return {"shows": int(shows), "clicks": int(clicks), "position": round(avg_pos, 2)}
+    return {
+        "shows": int(shows),
+        "clicks": int(clicks),
+        "position": round(_weighted("AVG_SHOW_POSITION", shows_points), 2),
+        "click_position": round(_weighted("AVG_CLICK_POSITION", clicks_points), 2),
+    }
 
 
 def yw_top_queries(

@@ -280,6 +280,7 @@ def yandex_traffic_daily() -> dict:
             "shows": cur["shows"],
             "clicks": cur["clicks"],
             "position": cur["position"],
+            "click_position": cur.get("click_position") or 0.0,
             "delta_shows": cur["shows"] - prev["shows"],
             "delta_clicks": cur["clicks"] - prev["clicks"],
             "top_queries": top,
@@ -384,8 +385,12 @@ def render_telegram(today: dt.date, site: str, payload: dict, advice: str) -> st
             f"({dc:+d}). Показов {y['shows']} ({delta_note})."
         )
         pos = y.get("position") or 0.0
+        cpos = y.get("click_position") or 0.0
         if pos:
-            lines.append(f"   📍 Средняя позиция: {pos:.1f}.")
+            # Позиция показа сопоставима с Google; в скобках — позиция клика
+            # (её Вебмастер выносит в заголовок «средняя позиция»).
+            cpos_str = f" (по кликам {cpos:.1f})" if cpos else ""
+            lines.append(f"   📍 Средняя позиция показа: {pos:.1f}{cpos_str}.")
         yq = y.get("top_queries") or []
         if yq:
             lines.append("   🔑 Топ-запросы:")
