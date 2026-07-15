@@ -105,6 +105,90 @@ def yw_search_queries(
     return data.get("queries", [])
 
 
+def yw_queries_total(
+    user_id: int,
+    host_id: str,
+    date_from: str,
+    date_to: str,
+) -> dict:
+    """Суммарная статистика поиска по всему сайту за период.
+
+    Возвращает {"shows", "clicks", "position"} — сумма показов и кликов за окно
+    и средняя позиция показа, взвешенная по показам за день. Источник —
+    /search-queries/all/history/ (агрегат по сайту, а не по отдельным запросам).
+
+    Docs: https://yandex.ru/dev/webmaster/doc/dg/reference/host-search-queries-all-history-get.html
+    """
+    params = {
+        "date_from": date_from,
+        "date_to": date_to,
+        "query_indicator": ["TOTAL_SHOWS", "TOTAL_CLICKS", "AVG_SHOW_POSITION"],
+    }
+    data = _get(
+        f"/user/{user_id}/hosts/{quote(host_id, safe='')}/search-queries/all/history/",
+        params=params,
+    )
+    ind = data.get("indicators", {}) or {}
+
+    def _series(key: str) -> list[dict]:
+        return [p for p in (ind.get(key) or []) if p.get("value") is not None]
+
+    shows_points = _series("TOTAL_SHOWS")
+    shows = sum(p["value"] for p in shows_points)
+    clicks = sum(p["value"] for p in _series("TOTAL_CLICKS"))
+
+    # Средняя позиция — взвешиваем дневные значения по показам того же дня.
+    shows_by_date = {p["date"]: p["value"] for p in shows_points}
+    num = den = 0.0
+    for p in _series("AVG_SHOW_POSITION"):
+        w = shows_by_date.get(p["date"], 0) or 0
+        num += p["value"] * w
+        den += w
+    if den:
+        avg_pos = num / den
+    else:
+        pos = _series("AVG_SHOW_POSITION")
+        avg_pos = sum(p["value"] for p in pos) / len(pos) if pos else 0.0
+
+    return {"shows": int(shows), "clicks": int(clicks), "position": round(avg_pos, 2)}
+
+
+def yw_top_queries(
+    user_id: int,
+    host_id: str,
+    date_from: str,
+    date_to: str,
+    limit: int = 5,
+) -> list[dict]:
+    """Топ запросов по показам с показами/кликами/позицией по каждому.
+
+    Возвращает [{"query", "shows", "clicks", "position"}, ...], упорядочено по
+    показам. Источник — /search-queries/popular/ с тремя индикаторами.
+    """
+    params = {
+        "date_from": date_from,
+        "date_to": date_to,
+        "query_indicator": ["TOTAL_SHOWS", "TOTAL_CLICKS", "AVG_SHOW_POSITION"],
+        "order_by": "TOTAL_SHOWS",
+        "limit": limit,
+    }
+    data = _get(
+        f"/user/{user_id}/hosts/{quote(host_id, safe='')}/search-queries/popular/",
+        params=params,
+    )
+    out: list[dict] = []
+    for q in data.get("queries", []):
+        ind = q.get("indicators", {}) or {}
+        pos = ind.get("AVG_SHOW_POSITION")
+        out.append({
+            "query": q.get("query_text", ""),
+            "shows": int(ind.get("TOTAL_SHOWS") or 0),
+            "clicks": int(ind.get("TOTAL_CLICKS") or 0),
+            "position": round(pos, 1) if pos is not None else None,
+        })
+    return out
+
+
 def yw_recrawl_quota(user_id: int, host_id: str) -> dict:
     """Возвращает квоту recrawl: { quota_remaining_daily, daily_quota }.
 

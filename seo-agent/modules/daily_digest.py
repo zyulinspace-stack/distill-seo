@@ -247,6 +247,52 @@ def yandex_webmaster_daily() -> dict:
         return {}
 
 
+def yandex_traffic_daily() -> dict:
+    """Трафик из Яндекса за 28 дней (сдвиг -3) vs предыдущее 28-дневное окно.
+
+    Возвращает показы/клики/среднюю позицию по всему сайту, топ-5 запросов и
+    дельту к прошлому окну. Окно и лаг — те же, что у GSC (см. GSC_LAG_DAYS).
+    При ошибке API возвращает {"error": "<короткая причина>"} — дайджест не роняем.
+    """
+    try:
+        from modules.yandex_webmaster import (
+            yw_resolve_host_id, yw_queries_total, yw_top_queries,
+        )
+        user_id, host_id = yw_resolve_host_id(host_url=site_domain())
+
+        end = dt.date.today() - dt.timedelta(days=GSC_LAG_DAYS)
+        start = end - dt.timedelta(days=GSC_WINDOW_DAYS - 1)
+        prev_end = start - dt.timedelta(days=1)
+        prev_start = prev_end - dt.timedelta(days=GSC_WINDOW_DAYS - 1)
+
+        cur = yw_queries_total(user_id, host_id, start.isoformat(), end.isoformat())
+        prev = yw_queries_total(user_id, host_id, prev_start.isoformat(), prev_end.isoformat())
+        top = yw_top_queries(user_id, host_id, start.isoformat(), end.isoformat(), limit=5)
+
+        if not (cur["shows"] or cur["clicks"] or top):
+            return {}
+
+        has_prev = bool(prev["shows"] or prev["clicks"])
+        return {
+            "start": start.isoformat(),
+            "end": end.isoformat(),
+            "days": GSC_WINDOW_DAYS,
+            "shows": cur["shows"],
+            "clicks": cur["clicks"],
+            "position": cur["position"],
+            "delta_shows": cur["shows"] - prev["shows"],
+            "delta_clicks": cur["clicks"] - prev["clicks"],
+            "top_queries": top,
+            "has_prev": has_prev,
+        }
+    except Exception as e:
+        # Короткая причина для человека, без трейсбэка. HTTPError → код+текст.
+        reason = getattr(getattr(e, "response", None), "text", "") or str(e)
+        reason = reason.strip().replace("\n", " ")[:140]
+        log.warning("Яндекс trafic daily: %s", e)
+        return {"error": reason or "нет данных"}
+
+
 def content_published_yesterday() -> list[dict]:
     """Статьи, опубликованные вчера (из weekly_digest, но cutoff=вчера)."""
     try:
@@ -269,6 +315,7 @@ def latest_audit() -> Optional[dict]:
 def build_payload() -> dict:
     payload = {
         "traffic": gsc_traffic_daily(),
+        "yandex_traffic": yandex_traffic_daily(),
         "rankings": rankings_daily(),
         "audit": latest_audit(),
         "yandex_webmaster": yandex_webmaster_daily(),
@@ -321,6 +368,34 @@ def render_telegram(today: dt.date, site: str, payload: dict, advice: str) -> st
     else:
         lines.append("\n👥 Трафик из Google: данных пока нет "
                      "(новый домен или Search Console ещё копит статистику).")
+
+    y = payload.get("yandex_traffic") or {}
+    if y.get("error"):
+        lines.append(f"\n🔎 Яндекс: данные недоступны ({y['error']}).")
+    elif y:
+        dc, ds = y["delta_clicks"], y["delta_shows"]
+        days = y.get("days", GSC_WINDOW_DAYS)
+        trend = ("больше прошлого периода" if ds > 0
+                 else "меньше прошлого периода" if ds < 0 else "как в прошлом периоде")
+        delta_note = f"{ds:+d} — {trend}" if y.get("has_prev") else "первое окно"
+        lines.append(
+            f"\n🔎 Трафик из Яндекса за {days} дней: {y['clicks']} "
+            f"{plural(y['clicks'], 'переход', 'перехода', 'переходов')} "
+            f"({dc:+d}). Показов {y['shows']} ({delta_note})."
+        )
+        pos = y.get("position") or 0.0
+        if pos:
+            lines.append(f"   📍 Средняя позиция: {pos:.1f}.")
+        yq = y.get("top_queries") or []
+        if yq:
+            lines.append("   🔑 Топ-запросы:")
+            for q in yq:
+                pos_str = f"поз. {q['position']:.1f}" if q.get("position") is not None else "поз. —"
+                lines.append(
+                    f"      • «{q['query']}» — {q['clicks']} "
+                    f"{plural(q['clicks'], 'клик', 'клика', 'кликов')} / "
+                    f"{q['shows']} показ. ({pos_str})"
+                )
 
     r = payload.get("rankings") or {}
     if r and r.get("total"):
