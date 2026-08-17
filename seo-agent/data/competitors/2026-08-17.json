@@ -1,0 +1,97 @@
+{
+  "date": "2026-08-17",
+  "competitors": [
+    {
+      "name": "Synergy",
+      "homepage_analysis": {
+        "url": "https://synergy.ru/about/education_articles/kolledzh/",
+        "status": 200,
+        "title": "Статьи «Колледж». | Университет СИНЕРГИЯ",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 44,
+        "links_count": 188,
+        "json_ld_types": [
+          "EducationalOrganization"
+        ],
+        "word_count": 761
+      },
+      "recent_urls": [
+        "https://synergy.ru/edu/news/kolichestvo_platnyix_mest_v_vuzax_teper_budet_regulirovatsya_kvotami_ot_gosudarstva",
+        "https://synergy.ru/about/blog/viktorina_turniryi_i_katanie_na_konkax_sinergiya_gotovitsya_k_prazdnovaniyu_tatyaninogo_dnya",
+        "https://synergy.ru/about/blog/otdoxnut_raznoobrazno_i_s_polzoj_kakie_meropriyatiya_projdut_dlya_studentov_sinergii_na_kanikulax",
+        "https://synergy.ru/about/blog/uchashhiesya_i_sotrudniki_sinergii_prinyali_uchastie_v_shaxmatnom_onlajn_turnire",
+        "https://synergy.ru/about/blog/v_animaczionnom_kinoklube_fakulteta_animaczii_obsudyat_raznyie_zhanryi_kino",
+        "https://synergy.ru/about/blog/studentyi_fakulteta_animaczii_prinyali_uchastie_vo_vstreche_kluba_animatorov_rossii",
+        "https://synergy.ru/about/blog/studentyi_fakulteta_upravleniya_prinyali_uchastie_v_mezhdunarodnom_festivale_bema",
+        "https://synergy.ru/about/blog/studentyi_fakulteta_gostepriimstva_proxodyat_kursyi_v_kulinarnoj_akademii_stanfood",
+        "https://synergy.ru/about/blog/prepodavatel_fakulteta_animaczii_vnesla_vklad_v_sozdanie_kinokartinyi_nominanta_premii_nika",
+        "https://synergy.ru/about/blog/sozdan_test_dlya_opredeleniya_predraspolozhennosti_k_texnologicheskomu_predprinimatelstvu",
+        "https://synergy.ru/about/blog/predstavitel_fakulteta_industrii_sporta_vyistupil_na_onlajn_konferenczii_sportivnaya_industriya_rossii_v_novoj_realnosti",
+        "https://synergy.ru/about/blog/studentyi_fakulteta_dizajna_i_reklamyi_prinyali_uchastie_v_proekte_biblioteka_materialov_praktika",
+        "https://synergy.ru/about/blog/priglashaem_na_art_russia_2022",
+        "https://synergy.ru/about/blog/vyiezdnyie_zanyatiya_kak_effektivnyij_sposob_polucheniya_znanij_i_opyita_na_fakultete_upravleniya",
+        "https://synergy.ru/about/blog/studentyi_fakulteta_kibersporta_o_perspektivax_rossijskogo_kibersportivnogo_ryinka",
+        "https://synergy.ru/about/blog/predstaviteli_fakulteta_it_posetili_konferencziyu_astrakonf_2022_it_transformacziya",
+        "https://synergy.ru/about/blog/sinergiya_voshla_v_top_10_rossijskix_vuzov_liderov_po_rezultatam_studentov_v_dobrovolnom_kvalifikaczionnom_ekzamene",
+        "https://synergy.ru/about/blog/predstavitel_fakulteta_it_aleksandr_batishhev_proshyol_obuchenie_v_kaspersky_academy",
+        "https://synergy.ru/about/blog/sinergiya_stala_generalnyim_partnyorom_festivalya_stixopesnya",
+        "https://synergy.ru/about/blog/zaveduyushhaya_kafedroj_menedzhmenta_v_fitnes_industrii_provela_treningi_dlya_fitnes_klubov_sssr",
+        "https://synergy.ru/about/blog/zaveduyushhaya_kafedroj_menedzhmenta_v_fitnes_industrii_provela_treningi_dlya_seti_fitnes_klubov_sssr",
+        "https://synergy.ru/about/blog/prepodavateli_fakulteta_it_v_shestoj_raz_proshli_otbor_v_shkolu_sbera",
+        "https://synergy.ru/about/blog/istoriya_studenta_iz_noyabrska_poluchivshego_vtoroe_vyisshee_distanczionno_dlya_razvitiya_kareryi",
+        "https://synergy.ru/about/blog/prezident_universiteta_sinergiya_yurij_rubin_rasskazal_ob_obuchenii_predprinimatelstvu_v_intervyu_ia_interfaks",
+        "https://synergy.ru/about/blog/student_fakulteta_it_pobedil_v_konkurse_studencheskij_startap_i_vyiigral_grant_na_million_rublej",
+        "https://synergy.ru/about/blog/na_besplatnyix_vebinarax_ot_fakulteta_animaczii_raskroyut_temyi_animaczionnogo_proizvodstva_i_istorii_iskusstv",
+        "https://synergy.ru/about/blog/predstavitel_fakulteta_industrii_sporta_vozglavil_ekspertnuyu_diskussiyu_na_profilnoj_konferenczii",
+        "https://synergy.ru/about/blog/studentki_kadrovogo_rezerva_prodolzhayut_uchastvovat_v_multisportivnyix_sostyazaniyax",
+        "https://synergy.ru/about/blog/v_novom_rejtinge_edtech_kompanij_rossii_sinergiya_peremestilas_v_top_3",
+        "https://synergy.ru/about/blog/fakultet_kino_rasskazhet_ob_istorii_kinematografa_na_festivale_tradicziya"
+      ],
+      "recent_count": 100
+    },
+    {
+      "name": "Distant-college (НСПК)",
+      "homepage_analysis": {
+        "url": "https://distant-college.ru/",
+        "status": 200,
+        "title": "ÐÑ Ð½Ðµ ÑÐ¾Ð±Ð¾Ñ?",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 2,
+        "links_count": 4,
+        "json_ld_types": [],
+        "word_count": 0
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "NIIDPO",
+      "homepage_analysis": {
+        "url": "https://niidpo.ru/",
+        "status": 200,
+        "title": "ÐÑ Ð½Ðµ ÑÐ¾Ð±Ð¾Ñ?",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 2,
+        "links_count": 4,
+        "json_ld_types": [],
+        "word_count": 0
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "VuzoPedia SPO",
+      "homepage_analysis": {
+        "error": "HTTP 403"
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    }
+  ]
+}
