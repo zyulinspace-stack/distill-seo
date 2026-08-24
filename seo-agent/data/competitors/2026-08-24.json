@@ -1,0 +1,97 @@
+{
+  "date": "2026-08-24",
+  "competitors": [
+    {
+      "name": "Synergy",
+      "homepage_analysis": {
+        "url": "https://synergy.ru/about/education_articles/kolledzh/",
+        "status": 200,
+        "title": "Статьи «Колледж». | Университет СИНЕРГИЯ",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 44,
+        "links_count": 188,
+        "json_ld_types": [
+          "EducationalOrganization"
+        ],
+        "word_count": 761
+      },
+      "recent_urls": [
+        "https://synergy.ru/about/blog/sinergiia_predlozila_kompleksnuiu_model_razvitiia_bespilotnyx_sistem_v_arktike",
+        "https://synergy.ru/about/blog/universitet_sinergiia_vystupil_partnerom_festivalia_kreativnyx_industrii_novatoriia",
+        "https://synergy.ru/about/blog/sinergiia_marketemotion_group_i_bema_obieiavili_o_strategiceskom_partnerstve",
+        "https://synergy.ru/about/blog/opros_sinergii_rossiiskie_studenty_rasskazali_cto_podderzivaet_ix_ucebnuiu_motivaciiu",
+        "https://synergy.ru/about/blog/opros_sinergii_studenty_rasskazali_kak_otnosiatsia_k_kiberugrozam",
+        "https://synergy.ru/about/blog/ucastniki_letnei_skoly_tavridaart_zashhitili_proekty_na_ploshhadke_sinergii",
+        "https://synergy.ru/about/blog/fakultet_informacionnyx_texnologii_nacinaet_sotrudnicestvo_s_gk_nacionalnye_laboratorii_bezopasnosti",
+        "https://synergy.ru/about/blog/sinergiia_provela_v_astraxani_seminar_po_razvitiiu_predprinimatelstva_sredi_veteranov_svo",
+        "https://synergy.ru/about/blog/v_universitete_sinergiia_prosel_kubok_kvn",
+        "https://synergy.ru/about/blog/universitet_sinergiia_stal_partnerom_kibersportivnoi_komandy_betboom_team",
+        "https://synergy.ru/about/blog/student_fakulteta_sporta_peresel_iz_lokomotiva_v_tureckii_galatasarai",
+        "https://synergy.ru/edu/news/otmena_oge_dlya_postupayushhix_v_kolledzhi_predlozhenie_gosdumyi_vyizvalo_spor",
+        "https://synergy.ru/edu/news/rosobrnadzor_obyasnil_razlichiya_v_perechne_razreshennyix_predmetov_na_oge_i_ege",
+        "https://synergy.ru/edu/news/minobrnauki_podderzhalo_postuplenie_v_vuzyi_posle_kolledzha_bez_ege_po_profilnyim_speczialnostya",
+        "https://synergy.ru/edu/news/reforma_itogovoj_attestaczii_novaya_sistema_vmesto_ege",
+        "https://synergy.ru/edu/news/ege_po_fizike_voshel_v_top_populyarnyix_predmetov",
+        "https://synergy.ru/edu/news/ege_po_arabskomu_yazyiku_prichinyi_vvedeniya_i_perspektivyi_dlya_abiturientov",
+        "https://synergy.ru/edu/news/roditelyam_razreshat_prisutstvovat_vo_vremya_dopuska_shkolnikov_v_punkt_provedeniya_ege",
+        "https://synergy.ru/edu/news/dopolnitelno_k_ege_vuzyi_dadut_ballyi_za_sozdanie_czifrovogo_portfolio",
+        "https://synergy.ru/edu/news/obshhestvoznanie_vnov_stalo_samyim_populyarnyim_vyiborom_sredi_vyipusknikov",
+        "https://synergy.ru/edu/news/rosobrnadzor_preduprezhdaet_vyipusknikov_o_moshennicheskix_sxemax_na_ege",
+        "https://synergy.ru/edu/news/minczifryi_vyistupaet_za_novyij_format_ege_po_fizike_i_informatike",
+        "https://synergy.ru/edu/news/texnicheskie_i_estestvenno_nauchnyie_predmetyi_lidiruyut_sredi_ege_po_vyiboru",
+        "https://synergy.ru/edu/news/lideryi_ege_po_vyiboru",
+        "https://synergy.ru/edu/news/otmena_ege_dlya_olimpiadnikov_ne_planiruetsya",
+        "https://synergy.ru/edu/news/ege_po_profilnoj_matematike_okazalsya_slishkom_slozhnyim",
+        "https://synergy.ru/edu/news/rossijskie_parlamentarii_vyistupayut_za_otmenu_oge",
+        "https://synergy.ru/edu/news/budushhee_ege_novovvedeniya_vnedrenie_prakticheskoj_chasti_populyarnyie_predmetyi",
+        "https://synergy.ru/edu/news/ege_i_oge_sushhestvenno_ne_izmenyatsya",
+        "https://synergy.ru/edu/news/predmetyi_lideryi_po_peresdacham_ege"
+      ],
+      "recent_count": 100
+    },
+    {
+      "name": "Distant-college (НСПК)",
+      "homepage_analysis": {
+        "url": "https://distant-college.ru/",
+        "status": 200,
+        "title": "ÐÑ Ð½Ðµ ÑÐ¾Ð±Ð¾Ñ?",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 2,
+        "links_count": 4,
+        "json_ld_types": [],
+        "word_count": 0
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "NIIDPO",
+      "homepage_analysis": {
+        "url": "https://niidpo.ru/",
+        "status": 200,
+        "title": "ÐÑ Ð½Ðµ ÑÐ¾Ð±Ð¾Ñ?",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 2,
+        "links_count": 4,
+        "json_ld_types": [],
+        "word_count": 0
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "VuzoPedia SPO",
+      "homepage_analysis": {
+        "error": "HTTP 403"
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    }
+  ]
+}
