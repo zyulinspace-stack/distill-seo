@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-02",
+  "site": "https://www.distill-school.ru",
+  "crawl_stats": {
+    "total": 25,
+    "ok": 25,
+    "redirect": 0,
+    "client_err": 0,
+    "server_err": 0,
+    "network_err": 0
+  },
+  "issues": [
+    {
+      "url": "https://www.distill-school.ru/axes/",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=213 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/axes/",
+      "check": "h1_multiple",
+      "severity": "medium",
+      "detail": "найдено 7 <h1>, должен быть 1"
+    }
+  ],
+  "psi": {}
+}
