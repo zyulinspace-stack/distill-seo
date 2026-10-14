@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-14",
+  "site": "https://www.distill-school.ru",
+  "crawl_stats": {
+    "total": 25,
+    "ok": 24,
+    "redirect": 0,
+    "client_err": 0,
+    "server_err": 0,
+    "network_err": 1
+  },
+  "issues": [
+    {
+      "url": "https://www.distill-school.ru/blog/",
+      "check": "network_error",
+      "severity": "high",
+      "detail": "HTTPSConnectionPool(host='www.distill-school.ru', port=443): Max retries exceeded with url: /blog/ (Caused by NameResolutionError(\"HTTPSConnection(host='www.distill-school.ru', port=443): Failed to resolve 'www.distill-school.ru' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "url": "https://www.distill-school.ru/axes/",
+      "check": "description_too_long",
+      "severity": "medium",
+      "detail": "desc=213 символов, рекомендуется ≤160"
+    },
+    {
+      "url": "https://www.distill-school.ru/axes/",
+      "check": "h1_multiple",
+      "severity": "medium",
+      "detail": "найдено 7 <h1>, должен быть 1"
+    }
+  ],
+  "psi": {}
+}
