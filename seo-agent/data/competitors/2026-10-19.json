@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-19",
+  "competitors": [
+    {
+      "name": "Synergy",
+      "homepage_analysis": {
+        "url": "https://synergy.ru/about/education_articles/kolledzh/",
+        "status": 200,
+        "title": "Статьи «Колледж». | Университет СИНЕРГИЯ",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 40,
+        "links_count": 196,
+        "json_ld_types": [],
+        "word_count": 699
+      },
+      "recent_urls": [
+        "https://synergy.ru/about/blog/iarmarka_akademiceskogo_iskusstva_art_rossiia_zaversilas_v_moskve",
+        "https://synergy.ru/about/blog/v_universitete_sinergiia_obsudili_menedzment_i_marketing_v_studenceskom_sporte",
+        "https://synergy.ru/about/blog/studenty_fakulteta_igrovoi_industrii_i_kibersporta_uznali_kak_dovodit_proekty_do_reliza",
+        "https://synergy.ru/about/blog/opros_sinergii_bolsinstvo_studentov_uvazaiut_vracei_a_cetvert_mectaiut_rabotat_v_medicinskoi_otrasli",
+        "https://synergy.ru/about/blog/predstaviteli_universiteta_sinergiia_priniali_ucastie_vo_vserossiiskom_forume_psixologov",
+        "https://synergy.ru/about/blog/v_kolledze_sinergiia_otmetili_den_spo",
+        "https://synergy.ru/about/blog/v_rossii_obieiavili_konkurs_koncepcii_pamiatnika_russkomu_voinu_pexotincu",
+        "https://synergy.ru/about/blog/studentam_fakulteta_igrovoi_industrii_i_kibersporta_rasskazali_o_sootnosenii_tvorcestva_i_biznesa_v_otrasli",
+        "https://synergy.ru/about/blog/predstaviteli_fakulteta_igrovoi_industrii_i_kibersporta_priniali_ucastie_v_konkurse_lidery_kibersporta",
+        "https://synergy.ru/about/blog/universitet_sinergiia_vystupit_partnerom_iv_vserossiiskogo_naucno_texnologiceskogo_diktanta",
+        "https://synergy.ru/about/blog/ekspert_fakulteta_it_rasskazal_o_vozmoznosti_primeneniia_ii_v_agropromyslennosti",
+        "https://synergy.ru/about/blog/opros_sinergii_24_rossiiskix_studentov_planiruiut_putesestvie_posle_zimnei_sessii",
+        "https://synergy.ru/about/blog/fakultet_logistiki_sinergii_prinial_ucastie_v_razrabotke_doroznoi_karty_transportnogo_vzaimodeistviia_sng",
+        "https://synergy.ru/about/blog/prepodavateli_fakulteta_dizaina_i_reklamy_proveli_delovuiu_programmu_dizain_kak_biznes_na_vystavke_russkii_dom_2026",
+        "https://synergy.ru/about/blog/skolniki_priangaria_izucat_rabotu_sputnika_v_proekte_orbitalnaia_laboratoriia_sinergii",
+        "https://synergy.ru/about/blog/v_universitete_sinergiia_otkrylas_vystavka_era_studenceskogo_sporta",
+        "https://synergy.ru/about/blog/start_obuceniia_po_programme_povyseniia_kvalifikacii_menedzment_sportivno_ozdorovitelnogo_i_fitnes_kluba",
+        "https://synergy.ru/about/blog/studenty_fakulteta_teatra_kino_i_tv_vystupili_na_vecere_laboratoriia_poezii",
+        "https://synergy.ru/about/blog/studenty_medicinskogo_fakulteta_sinergii_priniali_ucastie_v_vystavke_dentalekspo",
+        "https://synergy.ru/about/blog/na_fakultete_dizaina_i_reklamy_obsudiat_budushhee_modnoi_industrii",
+        "https://synergy.ru/about/blog/v_sinergii_studenty_kolledza_izucili_metody_monitoringa_lesnyx_pozarov",
+        "https://synergy.ru/about/blog/vypusknik_fakulteta_animacii_sinergii_pobedil_na_cempionate_artmasters",
+        "https://synergy.ru/about/blog/effekt_sinergii_kak_vypusknik_skoly_biznesa_razvivaet_set_medicinskix_laboratorii_dnkom",
+        "https://synergy.ru/about/blog/rukovoditeli_departamentov_sinergii_stali_laureatami_premii_rabotnikov_spo_moskvy",
+        "https://synergy.ru/about/blog/studenty_fakulteta_teatra_kino_i_tv_snialis_v_seriale_pastux_i_boevike_poslednii_sans",
+        "https://synergy.ru/about/blog/student_iuridiceskogo_fakulteta_vystupil_na_mezdunarodnoi_konferencii_v_mgu",
+        "https://synergy.ru/about/blog/studenty_fakulteta_psixologii_posetili_obrazovatelnyi_centr_integra_med",
+        "https://synergy.ru/about/blog/universitet_sinergiia_ishhet_geroev_nacionalnoi_premii_molodoi_specialist_goda_2026",
+        "https://synergy.ru/about/blog/zavkafedroi_ocenocnoi_deiatelnosti_i_korporativnyx_finansov_sinergii_irina_kosorukova_polucila_zvanie_pocetnyi_deiatel_nauki_i_texniki_goroda_moskvy",
+        "https://synergy.ru/about/blog/student_fakulteta_sporta_sinergii_aleksei_batrakov_zabil_gol_barselone_v_lige_cempionov"
+      ],
+      "recent_count": 37
+    },
+    {
+      "name": "Distant-college (НСПК)",
+      "homepage_analysis": {
+        "url": "https://distant-college.ru/",
+        "status": 200,
+        "title": "Дистанционный заочный колледж – обучение после 9 и 11 классов: среднее профессиональное образование онлайн. Получите диплом о педагогическом образовании – АНПОО «НСПК»",
+        "h1": "Дистанционное среднеепрофессиональное образованиеиз любой точки мира",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 71,
+        "links_count": 325,
+        "json_ld_types": [],
+        "word_count": 2938
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "NIIDPO",
+      "homepage_analysis": {
+        "url": "https://niidpo.ru/",
+        "status": 200,
+        "title": "Дистанционное дополнительное профессиональное образование на онлайн-курсах - Обучение в АНО «НИУДПО имени К.Д. Ушинского» (бывший НИУДПО имени К.Д. Ушинского)",
+        "h1": "Национальный исследовательский университет дополнительного образования и профессионального обучения имени К.Д. Ушинского",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 189,
+        "links_count": 355,
+        "json_ld_types": [],
+        "word_count": 3174
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "VuzoPedia SPO",
+      "homepage_analysis": {
+        "error": "HTTP 403"
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    }
+  ]
+}
