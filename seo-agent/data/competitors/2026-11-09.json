@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-09",
+  "competitors": [
+    {
+      "name": "Synergy",
+      "homepage_analysis": {
+        "url": "https://synergy.ru/about/education_articles/kolledzh/",
+        "status": 200,
+        "title": "Статьи «Колледж». | Университет СИНЕРГИЯ",
+        "h1": "",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 40,
+        "links_count": 196,
+        "json_ld_types": [],
+        "word_count": 784
+      },
+      "recent_urls": [
+        "https://synergy.ru/about/blog/uchastniki_volontyorskogo_czentra_sinergii_proveli_novogodnyuyu_yolku_v_detskoj_bolnicze",
+        "https://synergy.ru/about/blog/pozdravlenie_rektora_universiteta_sinergiia_s_dnem_znani_i_nacalom_ucebnogo_goda",
+        "https://synergy.ru/about/blog/pozdravlenie_rektora_universiteta_sinergiya_s_8_marta",
+        "https://synergy.ru/about/blog/na_fakultete_sporta_sostoialas_torzestvennaia_ceremoniia_vruceniia_diplomov_vypusknikam",
+        "https://synergy.ru/about/blog/fakultety-sinergii-proveli-master-klassy-na-vystavke-rossiia_2hs",
+        "https://synergy.ru/about/blog/sotrudnicy_universiteta_sinergiia_natalia_korsakova_i_anna_xorlina_polucili_blagodarnost_mera_moskvy",
+        "https://synergy.ru/about/blog/pocetnyi_advokat_rossii_natalia_virgur_vstretilas_so_studentami_iuridiceskogo_fakulteta_sinergii",
+        "https://synergy.ru/about/blog/v_afrikanskix_stranax_otkroiut_desiat_rossiiskix_obrazovatelnyx_centrov",
+        "https://synergy.ru/about/blog/turnir_po_saskam_sredi_studentov_prosel_na_fakultete_it",
+        "https://synergy.ru/about/blog/andrei_iakusik_rasskazal_studentam_sinergii_kak_ii_i_bespilotniki_meniaiut_avialogistiku",
+        "https://synergy.ru/about/blog/pozdravliaem_rektora_universiteta_sinergiia_artema_vasileva_s_dnem_rozdeniia",
+        "https://synergy.ru/about/blog/student_kolledza_sinergiia_pobedil_vo_vserossiiskom_konkurse_moia_zakonotvorceskaia_iniciativa",
+        "https://synergy.ru/about/blog/sinergiia_i_valaamskii_monastyr_proveli_masstabnyi_festival_prirodnoi_fotografii",
+        "https://synergy.ru/about/blog/studenty_fakulteta_teatra_kino_i_tv_obieedinili_dve_komedii_molera_i_dobavili_rep",
+        "https://synergy.ru/about/blog/sbornaia_sinergii_pobedila_v_obshhekomandnom_zacete_cempionata_moskvy_po_boksu_sredi_studentov",
+        "https://synergy.ru/about/blog/konferenciia_o_rannei_diagnostike_raka_molocnoi_zelezy_prosla_na_medicinskom_fakultete",
+        "https://synergy.ru/about/blog/ucastniki_synergyspace_vpervye_uslysali_signal_sputnika",
+        "https://synergy.ru/about/blog/sinergiia_otkroet_set_kolledzei_rabocix_professii_v_afrike",
+        "https://synergy.ru/about/blog/predstaviteli_fakulteta_sporta_priniali_ucastie_v_rabote_mezdunarodnogo_foruma_studenceskogo_sporta_buria",
+        "https://synergy.ru/about/blog/studenty_fakulteta_it_posetili_moskovskuiu_mezdunarodnuiu_nedeliu_videoigr",
+        "https://synergy.ru/about/blog/na_fakultete_fitnesa_i_kulturyi_zdorovya_proshla_zashhita_vyipusknyix_kvalifikaczionnyix_rabot",
+        "https://synergy.ru/about/blog/dizainer_dima_legostaev_rasskazal_studentam_fakulteta_dizaina_i_reklamy_kak_rozdaiutsia_brendy",
+        "https://synergy.ru/about/blog/sinergiia_otkryla_saxmatnuiu_gostinuiu_na_forume_rossiia_sportivnaia_derzava",
+        "https://synergy.ru/about/blog/studenty_fakulteta_ekonomiki_priniali_ucastie_vo_vserossiiskom_nalogovom_marafone",
+        "https://synergy.ru/about/blog/studenty_fakulteta_teatra_kino_i_tv_predstavili_premeru_spektaklia_po_komedii_molera",
+        "https://synergy.ru/about/blog/start_obucheniya_po_programme_povyisheniya_kvalifikaczii_menedzhment_sportivno_ozdorovitelnogo_i_fitnes_kluba",
+        "https://synergy.ru/about/blog/v_sinergii_sobrali_i_ispytali_demonstracionnyi_stend_sputnika",
+        "https://synergy.ru/about/blog/prepodavatel_fakulteta_animacii_prinial_ucastie_v_diskussii_o_podgotovke_kadrov_v_otrasli",
+        "https://synergy.ru/about/blog/sinergiia_sozdast_sobstvennuiu_komandu_po_gonkam_dronov",
+        "https://synergy.ru/about/blog/dekan_fakulteta_dizaina_i_reklamy_rasskazala_kak_arkticeskaia_moda_stanovitsia_brendom"
+      ],
+      "recent_count": 48
+    },
+    {
+      "name": "Distant-college (НСПК)",
+      "homepage_analysis": {
+        "url": "https://distant-college.ru/",
+        "status": 200,
+        "title": "Дистанционный заочный колледж – обучение после 9 и 11 классов: среднее профессиональное образование онлайн. Получите диплом о педагогическом образовании – АНПОО «НСПК»",
+        "h1": "Дистанционное среднеепрофессиональное образованиеиз любой точки мира",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 72,
+        "links_count": 329,
+        "json_ld_types": [],
+        "word_count": 3020
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "NIIDPO",
+      "homepage_analysis": {
+        "url": "https://niidpo.ru/",
+        "status": 200,
+        "title": "Дистанционное дополнительное профессиональное образование на онлайн-курсах - Обучение в АНО «НИУДПО имени К.Д. Ушинского» (бывший НИУДПО имени К.Д. Ушинского)",
+        "h1": "Национальный исследовательский университет дополнительного образования и профессионального обучения имени К.Д. Ушинского",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 191,
+        "links_count": 359,
+        "json_ld_types": [],
+        "word_count": 3222
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "VuzoPedia SPO",
+      "homepage_analysis": {
+        "error": "HTTP 403"
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    }
+  ]
+}
