@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-23",
+  "competitors": [
+    {
+      "name": "Synergy",
+      "homepage_analysis": {
+        "error": "HTTP 403"
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "Distant-college (НСПК)",
+      "homepage_analysis": {
+        "url": "https://distant-college.ru/",
+        "status": 200,
+        "title": "Дистанционный заочный колледж – обучение после 9 и 11 классов: среднее профессиональное образование онлайн. Получите диплом о педагогическом образовании – АНПОО «НСПК»",
+        "h1": "Дистанционное среднеепрофессиональное образованиеиз любой точки мира",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 73,
+        "links_count": 332,
+        "json_ld_types": [],
+        "word_count": 3002
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "NIIDPO",
+      "homepage_analysis": {
+        "url": "https://niidpo.ru/",
+        "status": 200,
+        "title": "Дистанционное дополнительное профессиональное образование на онлайн-курсах - Обучение в АНО «НИУДПО имени К.Д. Ушинского» (бывший НИУДПО имени К.Д. Ушинского)",
+        "h1": "Национальный исследовательский университет дополнительного образования и профессионального обучения имени К.Д. Ушинского",
+        "h2_count": 0,
+        "h2_examples": [],
+        "img_count": 191,
+        "links_count": 350,
+        "json_ld_types": [],
+        "word_count": 3071
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    },
+    {
+      "name": "VuzoPedia SPO",
+      "homepage_analysis": {
+        "error": "HTTP 403"
+      },
+      "recent_urls": [],
+      "recent_count": 0
+    }
+  ]
+}
